@@ -1,0 +1,33 @@
+﻿@using Services
+<h3>Welcome</h3>
+
+@page "/welcome"
+@inject IMessageService MessageService
+
+<h1>Velkomstside</h1>
+
+<div class="form-group">
+    <label for="name">Indtast dit navn:</label>
+    <input type="text" id="name" class="form-control" @bind="userName" />
+    <button class="btn btn-primary mt-2" @onclick="ShowMessage">Vis velkomst</button>
+</div>
+
+@if (!string.IsNullOrEmpty(welcomeMessage))
+{
+    <div class="alert alert-success mt-4">
+        @welcomeMessage
+    </div>
+}
+
+@code {
+    private string userName = "";
+    private string welcomeMessage = "";
+
+    private void ShowMessage()
+    {
+        if (!string.IsNullOrEmpty(userName))
+        {
+            welcomeMessage = MessageService.GetWelcomeMessage(userName);
+        }
+    }
+}
